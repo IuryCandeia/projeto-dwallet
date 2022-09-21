@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+{%load static %}
+{% block content %}
+    <h2 class="text-lg-center">Login</h2>
+    <form method="post" name="formUsuario" id="formUsuario">
+        <div class="container col-4 align-content-center m-auto">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="container">
+                <p>Email:</p>
+                <input class="form-control" type="text" name="email" id="email" placeholder="Digite o Email">
+                <p>Senha:</p>
+                <input class="form-control" type="text" name="senha" id="senha" placeholder="Digite a senha">
+                <input class="btn-primary mt-2" type="submit" value="Entrar">
+            </div>
+        </div>
+    </form>
+    <div class="col-2 mt-4 m-auto">
+    <a class="nav-link" href={% url 'cadastro' %}>Cadastro de Usuário</a>
+    </div>
+{% endblock %}

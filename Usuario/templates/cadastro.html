@@ -1,13 +1,9 @@
 {% extends 'main.html' %}
+{%load static %}
 {% block content %}
-    
+    <h2 class="text-lg-center">Cadastro</h2>
     <form name="formUsuario" id="formUsuario">
-        <div class="col-2 align-content-center mt-4 m-auto">
-            {% if msg%}
-                <div class="alert {{class}}">
-                    {{msg}}
-                </div>
-            {% endif%}
+        <div class=" container col-4 align-content-center mt-4 m-auto">
 
             {% csrf_token %}
             <p class=>Nome:</p>
@@ -23,8 +19,8 @@
             
         </div>
     </form>
-    <div class="col-2 mt-4 m-auto">
-        <a href="/">Cancelar</a>
+    <div class="col-1 mt-8 m-auto">
+        <a class="nav-link" href={% url 'home'%}>Cancelar</a>
     </div>
     
 {% endblock %}
