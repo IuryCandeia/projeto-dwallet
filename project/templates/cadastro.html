@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+{% block content %}
+    
+    <form name="formUsuario" id="formUsuario">
+        <div class="col-2 align-content-center mt-4 m-auto">
+            {% if msg%}
+                <div class="alert {{class}}">
+                    {{msg}}
+                </div>
+            {% endif%}
+
+            {% csrf_token %}
+            <p class=>Nome:</p>
+            <input class="form-control mt-1" type="text" name="name" id="name" placeholder="Digite o seu nome">
+            <p>Email:</p>
+            <input class="form-control mt-1" type="text" name="email" id="email" placeholder="Digite o Email">
+            <p>Senha:</p>
+            <input class="form-control mt-1" type="text" name="senha" id="senha" placeholder="Digite a senha">
+            <p>Confirmar senha:</p>
+            <input class="form-control mt-1" type="text" name="senha-conf" id="senha-conf" placeholder="Repita a senha">
+            
+            <input class="btn-primary mt-1" type="submit" value="Cadastrar">
+            
+        </div>
+    </form>
+    <div class="col-2 mt-4 m-auto">
+        <a href="/">Cancelar</a>
+    </div>
+    
+{% endblock %}
