@@ -3,12 +3,13 @@
     <form name="formUsuario" id="formUsuario">
         <div class="col-2 align-content-center mt-4 m-auto">
             {% csrf_token %}
-            <h3>Email:</h3>
+            <div class="container-fluid">
+            <p>Email:</p>
             <input class="form-control mt-lg-4" type="text" name="email" id="email" placeholder="Digite o Email">
-            <h3>Senha:</h3>
+            <p>Senha:</p>
             <input class="form-control mt-lg-4 " type="text" name="senha" id="senha" placeholder="Digite a senha">
             <input class="btn-primary mt-4" type="submit" value="Entrar">
-            
+            </div>
         </div>
     </form>
     <a href="/cadastro">Cadastro de Usuário</a>
