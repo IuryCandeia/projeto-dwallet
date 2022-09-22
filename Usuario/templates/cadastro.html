@@ -2,22 +2,29 @@
 {%load static %}
 {% block content %}
     <h2 class="text-lg-center">Cadastro</h2>
-    <form name="formUsuario" id="formUsuario">
+    <form action="{% url 'cadastro' %}" name="formUsuario" id="formUsuario" method="post" autocomplete="off">
         <div class=" container col-4 align-content-center mt-4 m-auto">
-
+            <div class="row g-3">
             {% csrf_token %}
             <p class=>Nome:</p>
-            <input class="form-control mt-1" type="text" name="name" id="name" placeholder="Digite o seu nome" value={{form.nome.value}} >
+            <input class="form-control mt-1" type="text" name="name" id="name" placeholder="Digite o seu nome" value={{form.nome.}} >
+            <p>Telefone:</p>
+            <input class="form-control mt-1" type="text" name="name" id="name" placeholder="Digite o seu número" value={{form.telefone}} >
             <p>Email:</p>
-            <input class="form-control mt-1" type="text" name="email" id="email" placeholder="Digite o Email" value={{form.email.value}} >
+            <input class="form-control mt-1" type="text" name="email" id="email" placeholder="Digite o Email" value={{form.email}} >
             <p>Senha:</p>
             <input class="form-control mt-1" type="text" name="senha" id="senha" placeholder="Digite a senha" required autofocus>
             <p>Confirmar senha:</p>
             <input class="form-control mt-1" type="text" name="senha-conf" id="senha-conf" placeholder="Repita a senha" required autofocus>
-            
-            <input class="btn-primary mt-1" type="submit" value="Cadastrar">
-            
         </div>
+        <div class="row g-2" id="botoes-perfil">
+            <div class="col-md-3">
+                <button id="bt-editar-usuario" type="submit" class="btn btn-success">
+                    Cadastrar
+                </button>
+            </div>
+        </div>
+    </div>
     </form>
     <div class="col-1 mt-8 m-auto">
         <a class="nav-link" href={% url 'home'%}>Cancelar</a>

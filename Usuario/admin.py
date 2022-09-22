@@ -1,7 +1,12 @@
 from django.contrib import admin
 
-from Usuario.models import Usuario
+from .import models
 
-@admin.register(Usuario)
+@admin.register(models.Usuario)
 class ColaboradorAdmin(admin.ModelAdmin):
     list_display = ('id', 'nome','email', 'telefone', 'senha',)
+
+@admin.register(models.Financa)
+class ColaboradorAdmin(admin.ModelAdmin):
+    list_display = ('id', 'titulo', 'tipo', 'descricao','valor')
+
