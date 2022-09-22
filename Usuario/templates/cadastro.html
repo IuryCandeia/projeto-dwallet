@@ -7,13 +7,13 @@
 
             {% csrf_token %}
             <p class=>Nome:</p>
-            <input class="form-control mt-1" type="text" name="name" id="name" placeholder="Digite o seu nome">
+            <input class="form-control mt-1" type="text" name="name" id="name" placeholder="Digite o seu nome" value={{form.nome.value}} >
             <p>Email:</p>
-            <input class="form-control mt-1" type="text" name="email" id="email" placeholder="Digite o Email">
+            <input class="form-control mt-1" type="text" name="email" id="email" placeholder="Digite o Email" value={{form.email.value}} >
             <p>Senha:</p>
-            <input class="form-control mt-1" type="text" name="senha" id="senha" placeholder="Digite a senha">
+            <input class="form-control mt-1" type="text" name="senha" id="senha" placeholder="Digite a senha" required autofocus>
             <p>Confirmar senha:</p>
-            <input class="form-control mt-1" type="text" name="senha-conf" id="senha-conf" placeholder="Repita a senha">
+            <input class="form-control mt-1" type="text" name="senha-conf" id="senha-conf" placeholder="Repita a senha" required autofocus>
             
             <input class="btn-primary mt-1" type="submit" value="Cadastrar">
             

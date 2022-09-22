@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Usuario.apps.UsuarioConfig',
-    'Cadastro.apps.CadastroConfig',
 ]
 
 MIDDLEWARE = [
@@ -126,5 +125,5 @@ STATICFILES_DIR = (os.path.join(BASE_DIR, '/static/'))
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'homepage'
-LOGOUT_REDIRECT_URL = ''
+# LOGIN_REDIRECT_URL = 'homepage'
+# LOGOUT_REDIRECT_URL = 'login'
