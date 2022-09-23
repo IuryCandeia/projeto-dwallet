@@ -1,10 +1,12 @@
 from re import template
 from django.urls import path
-from .views import homeView,  homePageView
+from django.contrib.auth import views as auth_views
+from .views import CadastroView, LoginView
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
-    path('', homeView.as_view(template_name="login.html"), name='home'),
-    # path('cadastro/', cadastroView.as_view(template_name="cadastro.html"), name='cadastro'),
-    path('cadastro/', views.cadastro, name='cadastro'),
-    path('homepage/', homePageView.as_view(template_name="homepage.html"), name="homepage"),
+    path('cadastro/', CadastroView.as_view(), name='novo_usuario'),
+    path('', LoginView.as_view(), name="login_page"),
 ]

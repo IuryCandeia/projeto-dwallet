@@ -2,16 +2,16 @@
 {%load static %}
 {% block content %}
     <h2 class="text-lg-center">Cadastro</h2>
-    <form action="{% url 'cadastro' %}" name="formUsuario" id="formUsuario" method="post" autocomplete="off">
+    <form action="{% url 'cadastro' %}" name="formUsuario" id="formUsuario" method="POST" autocomplete="off">
         <div class=" container col-4 align-content-center mt-4 m-auto">
             <div class="row g-3">
             {% csrf_token %}
             <p class=>Nome:</p>
-            <input class="form-control mt-1" type="text" name="name" id="name" placeholder="Digite o seu nome" value={{form.nome.}} >
+            <input class="form-control mt-1" type="text" name="name" id="name" placeholder="Digite o seu nome" value={{nome.value}} >
             <p>Telefone:</p>
-            <input class="form-control mt-1" type="text" name="name" id="name" placeholder="Digite o seu número" value={{form.telefone}} >
+            <input class="form-control mt-1" type="text" name="name" id="name" placeholder="Digite o seu número" value={{telefone.value}} >
             <p>Email:</p>
-            <input class="form-control mt-1" type="text" name="email" id="email" placeholder="Digite o Email" value={{form.email}} >
+            <input class="form-control mt-1" type="text" name="email" id="email" placeholder="Digite o Email" value={{email.value}} >
             <p>Senha:</p>
             <input class="form-control mt-1" type="text" name="senha" id="senha" placeholder="Digite a senha" required autofocus>
             <p>Confirmar senha:</p>
@@ -19,7 +19,7 @@
         </div>
         <div class="row g-2" id="botoes-perfil">
             <div class="col-md-3">
-                <button id="bt-editar-usuario" type="submit" class="btn btn-success">
+                <button type="submit" class="btn btn-success">
                     Cadastrar
                 </button>
             </div>

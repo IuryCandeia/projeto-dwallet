@@ -1,29 +1,38 @@
 {% extends 'main.html' %}
 {%load static %}
 {% block content %}
-    <h2 class="text-lg-center">Login</h2>
-    <form method="post" name="formUsuario" id="formUsuario">
-        <div class="container col-4 align-content-center m-auto">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <div class="container">
-                <p>Email:</p>
-                <input class="form-control" type="text" name="email" id="email" placeholder="Digite o Email">
-                <p>Senha:</p>
-                <input class="form-control" type="text" name="senha" id="senha" placeholder="Digite a senha">
-                <input class="btn-primary mt-2" type="submit" value="Entrar">
-            </div>
+    <div class="col-md-5 container align-content-center">
+        <h2 class="text-lg-center">Login</h2>
+        <hr>
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-row" >
+                    <div class="col-md-5 offset-md-1">
+                        <div class="form-group">
+                            <label class="small mb-1">Email</label>
+                            {{ form.username }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-5 offset-md-1">
+                        <div class="form-group">
+                          <label class="small mb-1">Senha</label>
+                          {{ form.password }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-10 offset-md-1">
+                        <div class="form-group mt-0 mb-1">
+                          <button name="login" class="col-md-12 btn btn-dark" id="login">Entrar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
-    </form>
-    <div class="col-4 mt-6 m-auto">
-    <a class="nav-link" href={% url 'cadastro' %}>Ainda não possui cadastro? Clique aqui!</a>
     </div>
 
-    {% if form.errors %}
-          <div class="alert alert-danger">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            Por favor, verifique o Email e/ou Senha informados
-          </div>
-    {% endif %}
 
 {% endblock %}

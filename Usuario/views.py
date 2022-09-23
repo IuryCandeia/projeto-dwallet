@@ -1,143 +1,66 @@
-from pyexpat.errors import messages
+from django.contrib import messages
+from xml.dom.minidom import CharacterData
 from django.views.generic import TemplateView
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.models import User
-from .models import Usuario
-
-class homeView(TemplateView):
-    template_name: "main.html"
-
-def senhas_nao_sao_iguais(senha, senha2):
-    return senha != senha2
-def campo_vazio(campo):
-    return not campo.strip()
-def cadastro(request):
-        try:
-            if request.method == "POST":
-            
-                email = request.POST["email"]
-                nome = request.POST["nome"]
-                numero = request.POST['numero']
-                senha = request.POST["senha"]
-                senhaConf= request.POST["senha-conf"]
-                if email.find('@') == -1:
-                    messages.error(
-                        request, "Email no formato errado, insira um email válido")
-                    return redirect("cadastro")
-                print(email,nome,senha,numero)
-                
-                
-                user = Usuario.objects.create_user(email=email, nome=nome, numero=numero, senha=senha)
-                user.save()
-
-                print(request, 'Usuário cadastrado com sucesso')
-                return redirect('login')
-
-            else:
-                print("entrou")
-                return render(request, "cadastro.html")
-                
-        except:
-            print("erro")
-
-        
-    
-
-class homePageView(TemplateView):
-    template_name: "homePage.html"
-
-
-
-# def cadastro(request):
-#     try:
-#         if request.method == "POST":
-        
-#             email = request.POST["email"]
-#             nome = request.POST["nome"]
-#             numero = request.POST['numero']
-#             senha = request.POST["new-password"]
-#             senhaConf= request.POST["confirm-new-password"]
-
-#             if email.find('@') == -1:
-#                 messages.error(
-#                     request, "Email no formato errado, insira um email institucional")
-#                 return redirect("cadastro")
-#             elif (email.find('@') != -1) and email[email.find('@'):] != '@fiponline.edu.br':
-#                 messages.error(
-#                     request, "Por Favor insira o seu email institucional. ex:nome_sobrenome@fiponline.edu.br")
-#                 return redirect("cadastro")
-
-#             if campo_vazio(email):
-#                 messages.error(request, "O campo email não pode ficar em Branco")
-#                 return redirect("cadastro")
-#             if campo_vazio(nome):
-#                 messages.error(request, "O campo Nome não pode ficar em Branco")
-#                 return redirect("cadastro")
-#             if campo_vazio(numero):
-#                 messages.error(request, "O campo Tel não pode ficar em Branco")
-#                 return redirect("cadastro")
-#             if senhas_nao_sao_iguais(senha, senhaConf):
-#                 messages.error(request, 'As senhas não são iguais')
-#                 return redirect("cadastro")
-#             if User.objects.filter(email=email).exists():
-#                 messages.error(request, 'Usuário já cadastrado ')
-#                 return redirect("cadastro")
-#             code = ''
-#             for x in range(6):
-#                 code = code + str(random.randint(0, 9))
-
-#             user = Usuario.objects.create_user(email=email, nome=nome, numero=numero, password=senha, status_validado=True, code_validado=code)
-#             user.save()
-
-#             messages.success(request, 'Colaborador cadastrado com sucesso')
-#             return redirect('login')
-
-#             # Cadastro com código 
-#             # return redirect("corfirmacao_code", user.id)
-#         else:
-
-#             return render(request, "colaborador/cadastro.html")
-#     except:
-#         messages.error(request, 'Ops, Tivemos um pequeno problema inesperado.Recarregue a página e logue novamente')
-#         return redirect('login')
+from django.http import HttpResponse
+from django.contrib.auth import authenticate, login
+from Usuario.forms import CadastroForm, LoginForm
+from .models import Usuario, Financa
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from django.views import View
 
 
 
 
-# def login(request):
-#     try:
-#         if request.method == 'POST':
-#             email = request.POST['email']
-#             senha = request.POST['senha']
+class CadastroView(View):
+    form_class = CadastroForm
+    initial = {'key': 'value'}
+    template_name = 'cadastro_form.html'
 
-#             if campo_vazio(email) or campo_vazio(senha):
-#                 messages.error(request, 'Campo email e senha não podem ser vazios')
-#                 return redirect('login')
-            
-#             if Usuario.objects.filter(email=email).exists():
-#                 try:            
-#                     col = get_object_or_404(Colaborador, email=email)
-#                 except:
-#                     messages.error(request, 'Tivemos um pequeno problema.Recarregue a página e logue novamente')
-#                     return redirect('login')
-#                 nome = Colaborador.objects.filter(
-#                     email=email).values_list('username', flat=True).get()
+    def dispatch(self, request, *args, **kwargs):
+        # will redirect to the home page if a user tries to access the register page while logged in
+        if request.user.is_authenticated:
+            return redirect(to='/')
 
-#                 colaborador = auth.authenticate(
-#                     request, username=nome, password=senha)
+        # else process dispatch as it otherwise normally would
+        return super(CadastroView, self).dispatch(request, *args, **kwargs)
 
-#                 if colaborador != None:
-#                     auth.login(request, colaborador)
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form': form})
 
-#                     if col.status_validado == False:
-#                         return redirect("corfirmacao_code", col.id)
-#                     return redirect('dashboard')
-#                 else:
-#                     messages.error(request, "Email ou senha não confere")
-#             else:
-#                 messages.error(request, "Email não cadastrado")
-#         return render(request, "colaborador/login.html")
-#     except:
-#         messages.error(request, 'Ops, Tivemos um pequeno problema inesperado.Recarregue a página e logue novamente')
-#         return redirect('login')
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
 
+        if form.is_valid():
+            form.save()
+            print('ok')
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Conta criada para {username}')
+            print('ok')
+            return redirect(to='/')
+
+        return render(request, self.template_name, {'form': form})
+
+
+
+
+class LoginView(View):
+    form_class = LoginForm
+    template_name = 'login.html'
+
+    def form_valid(self, form):
+        remember_me = form.cleaned_data.get('remember_me')
+
+        if not remember_me:
+            # set session expiry to 0 seconds. So it will automatically close the session after the browser is closed.
+            self.request.session.set_expiry(0)
+
+            # Set session as modified to force data updates/cookie to be saved.
+            self.request.session.modified = True
+
+        # else browser session will be as long as the session cookie time "SESSION_COOKIE_AGE" defined in settings.py
+        return super(LoginView, self).form_valid(form)
