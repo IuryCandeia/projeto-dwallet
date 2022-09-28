@@ -12,6 +12,7 @@ class CadastroForm(UserCreationForm):
             attrs={
                 "placeholder": "Nome",
                 "class": "form-control",
+                "id": 'username',
             }
         ),
     )
@@ -61,7 +62,7 @@ class CadastroForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ["id", "username", "email", "password1", "password2"]
+        fields = [ "username", "telefone", "email", "password1", "password2"]
 
 
 class LoginForm(AuthenticationForm):

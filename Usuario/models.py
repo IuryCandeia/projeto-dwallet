@@ -1,14 +1,14 @@
 from statistics import mode
-from django.db import models
 from django.contrib.auth.models import User
-
-
+from django.db import models
 
 class Usuario(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-
+    nome = models.CharField(max_length=150)
+    numero = models.CharField(max_length=15)
+    User.email = models.CharField(max_length=50)
+    
     def __str__(self):
-        return self.user.username
+        return self.nome
 
 
 class Financa(models.Model):
@@ -19,4 +19,3 @@ class Financa(models.Model):
 
     def __str__(self):
         return "{} - {} - {} ({})".format(self.titulo, self.tipo, self.descricao, self.valor)
-    

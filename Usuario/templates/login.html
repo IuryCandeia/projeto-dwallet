@@ -8,7 +8,7 @@
             <form method="POST">
                 {% csrf_token %}
                 <div class="form-row" >
-                    <div class="col-md-5 offset-md-1">
+                    <div class="col-md-10 offset-md-1">
                         <div class="form-group">
                             <label class="small mb-1">Email</label>
                             {{ form.username }}
@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="col-md-5 offset-md-1">
+                    <div class="col-md-10 offset-md-1">
                         <div class="form-group">
                           <label class="small mb-1">Senha</label>
                           {{ form.password }}
@@ -27,6 +27,9 @@
                     <div class="col-md-10 offset-md-1">
                         <div class="form-group mt-0 mb-1">
                           <button name="login" class="col-md-12 btn btn-dark" id="login">Entrar</button>
+                        </div>
+                        <div id="bt-esq-senha" class="text-center">
+                            <a href="{% url 'cadastro_form' %}" id="bt-esqueci-senha">Ainda não tem cadastro? Clique aqui</a>
                         </div>
                     </div>
                 </div>

@@ -9,7 +9,7 @@
             Preencha todos os campos.
         </p>
         <hr>
-        <form action="" method="POST">
+        <form action="{% url 'cadastro_form'%}" method="POST">
             {% csrf_token %}
     
             <div class="form-row">
@@ -37,7 +37,6 @@
                     <div class="form-group">
                         <label class="small mb-1">Senha</label>
                         {{ form.password1 }}
-                        {{ form.errors.password }}
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -50,6 +49,9 @@
             </div>
             <div class="form-group mt-4 mb-0">
                 <button type="submit" class="col-md-12 btn btn-dark">Cadastrar</button><br><br>
+            </div>
+            <div id="bt-esq-senha" class="text-center">
+                <a href="{% url 'login' %}" id="bt-esqueci-senha">Já possui conta? Clique aqui para fazer login</a>
             </div>
     </div>
     </form>
