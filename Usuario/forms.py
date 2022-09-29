@@ -79,3 +79,13 @@ class CadastroForm(UserCreationForm):
         usuario = get_object_or_404(Usuario, id=id)
         usuario.ativo = True
         usuario.save()
+
+
+
+class UserForm(forms.ModelForm):
+    password = forms.CharField(label='Senha', widget=forms.TextInput(attrs={'type': 'password'}))
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'username', 'email', 'password']
+
