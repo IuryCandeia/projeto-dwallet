@@ -1,0 +1,10 @@
+{% extends 'main.html' %}
+{%load static %}
+{% block content %}
+    <h1>Sou uma área super protegida!!! Só para usuários logados!!!!</h1>
+    <h2>Usuário que fez login: {{ user.get_full_name|default:user.username }}</h2>
+    <a href="{% url 'Usuario:user_logout' %}">Fazer Logout</a>
+
+
+
+{% endblock %}
