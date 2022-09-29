@@ -2,7 +2,7 @@
 {%load static %}
 {% block content %}
     <h2 class="text-lg-center">Cadastro</h2>
-    <form action="{% url 'cadastro' %}" name="formUsuario" id="formUsuario" method="POST" autocomplete="off">
+    {% if cadastro == True %} action="{% url 'cadastro'%}" {% else %} action="{% url 'login' %}"{% endif %} method="POST" autocomplete="off" >
         <div class=" container col-4 align-content-center mt-4 m-auto">
             <div class="row g-3">
             {% csrf_token %}

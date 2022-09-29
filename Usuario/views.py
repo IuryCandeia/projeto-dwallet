@@ -6,7 +6,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
-from Usuario.forms import CadastroForm, LoginForm
+from Usuario.forms import CadastroForm
 from .models import Usuario, Financa
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
@@ -41,18 +41,38 @@ class CadastroView(TemplateView):
 
 class LoginView(TemplateView):
     template_name = 'login.html'
-    initial = {'key': 'value'}
-    form_class = LoginForm
-
-    def get(self, request, *args, **kwargs):
-        form = self.form_class(initial=self.initial)
-        return render(request, self.template_name, {'form': form})
-    
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-        print('ok')
-
-        return render(request, self.template_name, {'form': form})
 
 
+def cadastro(request):
+    template_name = 'cadastro_form.html'
+    context = {}
+    if request.method == 'POST':
+        form = CadastroForm(request.POST)
+        print('post')
+        print(form.is_valid)
+        if form.is_valid():
+            print('a')
+            f = form.save()
+            print('aqui')
+            f.set_password(f.password)
+            f.save()
+            messages.success(request, 'Usuário cadastrado com sucesso.')
+            return redirect('usuario:login')
+    form = CadastroForm()
+    context['form'] = form
+    return render(request, template_name, context)
 
+
+def login(request):
+    template_name = 'login.html'
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        user = authenticate(request, email=email, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('usuario:home_page.html')
+        else:
+            print('deu caca')
+
+    return render(request, template_name, {})

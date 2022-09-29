@@ -5,21 +5,23 @@
         <h2 class="text-lg-center">Login</h2>
         <hr>
         <div class="card-body">
-            <form method="POST">
+            <form action="{% url 'login' %}" method="POST" autocomplete="off">
                 {% csrf_token %}
                 <div class="form-row" >
                     <div class="col-md-10 offset-md-1">
                         <div class="form-group">
                             <label class="small mb-1">Email</label>
-                            {{ form.username }}
+                            <input type="email" class="form-control" id="id-email-login" name="email" required
+                                    placeholder="Email">
                         </div>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col-md-10 offset-md-1">
                         <div class="form-group">
-                          <label class="small mb-1">Senha</label>
-                          {{ form.password }}
+                            <label class="small mb-1">Senha</label>
+                            <input type="password" class="form-control" name="senha" id="id-senha-login" required
+                                    placeholder="Senha">
                         </div>
                     </div>
                 </div>

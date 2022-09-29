@@ -3,13 +3,19 @@ from statistics import mode
 from django.contrib.auth.models import User
 from django.db import models
 
-class Usuario(models.Model):
-    User.nome = models.CharField(max_length=150, default='')
-    numero = models.CharField(max_length=15, default='')
-    User.email = models.CharField(max_length=50, default='')
+class Usuario(User):
+    User.username = models.CharField(
+        'Nome', max_length=100, unique=True, default='')
+    telefone = models.CharField(
+        "Telefone", max_length=21, default='(83)99999-9999', blank=True, null=True)
+    User.email = models.EmailField("Email", default='eu@eu.com')
     
-    def __str__(self):
-        return self.nome
+    def statusAtivo(self):
+        if self.ativo == True:
+            return "Ativo"
+        else:
+            return "Inativo"
+   
 
 
 class Financa(models.Model):
