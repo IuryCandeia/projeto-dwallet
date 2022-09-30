@@ -1,0 +1,18 @@
+{% extends 'main.html' %}
+{%load static %}
+{% block content %}
+<h1>Sou uma área super protegida!!! Só para usuários logados!!!!</h1>
+<h2>Usuário que fez login: {{ user.get_full_name|default:user.username }}</h2>
+
+
+<form class="form-control" action="{% url 'form' %}" method="post" autocomplete="off">
+
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <input type="submit" value="Cadastrar">
+</form>
+
+
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'main.html' %}
+{%load static %}
+{% block content %}
+<h2>
+    Welcome User
+</h2>
+
+
+    <ul>
+    {% for pessoa in pessoas %}
+        <li>
+            {{ pessoa.id }} - {{ pessoa.nome }} <a href="{% url 'editar' pessoa.id %}">Editar</a>
+        </li>
+    {% endfor %}
+    </ul>
+
+    <form class="form-group" action="{% url 'salvar' %}" method="post">
+        {% csrf_token %}
+        <label for="nome">Nome: </label>
+        <input type="text" name="nome">
+        <button type="submit">Salvar</button>
+    </form>
+
+{% endblock %}

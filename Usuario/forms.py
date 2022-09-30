@@ -1,10 +1,11 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.forms import ModelForm
 from django.shortcuts import get_object_or_404
 from requests import post
 
-from Usuario.models import Usuario
+from Usuario.models import Cliente, Usuario
 
 
 class CadastroForm(UserCreationForm):
@@ -13,7 +14,7 @@ class CadastroForm(UserCreationForm):
         max_length=100,
         required=True,
         widget=forms.TextInput(
-            attrs={
+            attrs={"name":"nome",
                 "placeholder": "Nome",
                 "class": "form-control",
                 "id": 'username',
@@ -23,7 +24,7 @@ class CadastroForm(UserCreationForm):
     telefone = forms.CharField(
         label="Número Telefone",
         widget=forms.TextInput(
-            attrs={
+            attrs={"name":"telefone",
                 "placeholder": "Número telefone",
                 "id": "id_telefone",
                 "class": "form-control",
@@ -33,7 +34,7 @@ class CadastroForm(UserCreationForm):
     email = forms.EmailField(
         required=True,
         widget=forms.TextInput(
-            attrs={
+            attrs={"name":"Email",
                 "placeholder": "Email",
                 "class": "form-control",
             }
@@ -43,7 +44,7 @@ class CadastroForm(UserCreationForm):
         max_length=50,
         required=True,
         widget=forms.PasswordInput(
-            attrs={
+            attrs={"name":"senha",
                 "placeholder": "Senha",
                 "class": "form-control",
                 "data-toggle": "password",
@@ -55,7 +56,7 @@ class CadastroForm(UserCreationForm):
         max_length=50,
         required=True,
         widget=forms.PasswordInput(
-            attrs={
+            attrs={"name":"senha",
                 "placeholder": "Confirme Senha",
                 "class": "form-control",
                 "data-toggle": "password",
@@ -63,12 +64,6 @@ class CadastroForm(UserCreationForm):
             }
         ),
     )
-
-
-    def save(self):
-        data = self.cleaned_data
-        user = Usuario(username=data['username'], telefone=data['telefone'], email=data['email'], password=data['senha'])
-        user.save()
 
     def desativar(request, id):
         usuario = get_object_or_404(Usuario, id=id)
@@ -89,3 +84,10 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ['first_name', 'username', 'email', 'password']
 
+
+
+
+class UserForm(ModelForm):
+    class Meta:
+        model = Cliente
+        fields = "__all__"
