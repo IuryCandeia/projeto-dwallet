@@ -31,13 +31,6 @@ def cadastro(request):
         form.save()
         return redirect('login')
 
-        nome = request.POST.get('nome', None)
-        emailUser = request.POST.get('email', None)
-        telefone = request.POST.get('telefone', None)
-        senha1 = request.POST.get('senha1', None)
-        senha2 = request.POST.get('senha2', None)
-        print(nome, emailUser, telefone, senha1, senha2)
-  
     return render(request, template_name, {'form': form})
 
 def login(request):

@@ -7,6 +7,11 @@ from requests import post
 
 from Usuario.models import Cliente, Usuario
 
+GENERO_CHOICES = (
+    ('m', 'Masculino'),
+    ('f', 'Feminino'),
+    ('o', 'Outros')
+)
 
 class CadastroForm(UserCreationForm):
 
@@ -31,6 +36,7 @@ class CadastroForm(UserCreationForm):
             }
         ),
     )
+    genero = forms.ChoiceField(choices=GENERO_CHOICES)
     email = forms.EmailField(
         required=True,
         widget=forms.TextInput(

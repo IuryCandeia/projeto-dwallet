@@ -5,11 +5,11 @@
             {{ pessoa.id }} - {{ pessoa.nome }}
 
 
-    <form class="form-group" action="{% url 'salvar' %}" method="POST">
+    <form class="form-group" action="{% url 'update' pessoa.id %}" method="POST">
         {% csrf_token %}
         <label for="nome">Nome: </label>
         <input type="text" name="nome" value="{{ pessoa.nome }}">
-        <button type="submit">Salvar</button>
+        <button type="submit">Editar</button>
     </form>
 
 {% endblock %}
