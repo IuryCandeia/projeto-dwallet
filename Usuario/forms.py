@@ -1,3 +1,4 @@
+from attr import fields
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -12,6 +13,56 @@ GENERO_CHOICES = (
     ('f', 'Feminino'),
     ('o', 'Outros')
 )
+
+
+class UsuarioForm(UserCreationForm):
+    username = forms.CharField(
+        max_length=100,
+        required=True,
+        widget=forms.TextInput(
+            attrs={"name":"nome",
+                "placeholder": "Nome",
+                "class": "form-control",
+                "id": 'username',
+            }
+        ),
+    )
+    telefone = forms.CharField(
+        label="Número Telefone",
+        widget=forms.TextInput(
+            attrs={"name":"telefone",
+                "placeholder": "Número telefone",
+                "id": "id_telefone",
+                "class": "form-control",
+            }
+        ),
+    )
+    genero = forms.ChoiceField(choices=GENERO_CHOICES)
+    email = forms.EmailField(
+        required=True,
+        widget=forms.TextInput(
+            attrs={"name":"Email",
+                "placeholder": "Email",
+                "class": "form-control",
+            }
+        ),
+    )
+
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+
+    def desativar(request, id):
+        usuario = get_object_or_404(Usuario, id=id)
+        usuario.ativo = False
+        usuario.save()
+        
+    def ativar(request, id):
+        usuario = get_object_or_404(Usuario, id=id)
+        usuario.ativo = True
+        usuario.save()
+
 
 class CadastroForm(UserCreationForm):
 

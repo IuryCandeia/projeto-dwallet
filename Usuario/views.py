@@ -7,19 +7,30 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
-from Usuario.forms import CadastroForm, UserForm
+from Usuario.forms import CadastroForm, UserForm, UsuarioForm
 from .models import Usuario, Financa
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.views import View
 
+class UsuarioCreate(CreateView):
+    template_name = 'form.html'
+    form_class = UsuarioForm
+    sucess_url = reverse_lazy('login')
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
 
+        context['titulo'] = "Cadastrar novo usuário"
+        context['botao'] = "Cadastrar"
 
+        return context 
 
-class LoginView(TemplateView):
-    template_name = 'login.html'
+def inicio(request):
+    template_name = 'inicio.html'
+    
+    return render(request, template_name)
 
 
 def cadastro(request):

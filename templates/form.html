@@ -1,0 +1,37 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+{% if form.errors %}
+<p>Email ou senha inválido.</p>
+{% endif %}
+
+{% if next %}
+{% if user.is_authenticated %}
+<p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+{% else %}
+<p>Please login to see this page.</p>
+{% endif %} 
+{% endif %}
+
+
+<div class="contaier">
+
+    <div class="row form-group row">
+
+        <div class="col-md-4 mx-auto">
+            <h3>{{ titulo }}</h3>
+            <form class="align-items-md-center" method="post" action="">
+                {% csrf_token %}
+                <div class="form-group row">
+                    {{ form.as_p }}
+                </div>
+                <input class='btn-success form-group' type="submit" value={{botao}}>
+            </form>
+        </div>
+    </div>
+
+
+
+    {% endblock %}
