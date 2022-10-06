@@ -1,0 +1,13 @@
+{% extends 'main.html' %}
+
+{%load static %}
+
+{% block content %}
+    <form class="form-group" action="{% url 'user_form' %}" method="post">
+        
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Cadastrar" class="btn-success">
+    
+    </form>
+{% endblock %}

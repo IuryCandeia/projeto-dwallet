@@ -1,11 +1,16 @@
+import email
+from enum import Flag
+from unicodedata import name
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import ModelForm
 from django.shortcuts import get_object_or_404
 from requests import post
+from sqlalchemy import null
 
-from Usuario.models import Cliente, Usuario
+from Usuario.models import Usuario
+from Usuario.validacao import comparando_senhas,  duplicidade_id
 
 GENERO_CHOICES = (
     ('m', 'Masculino'),
@@ -13,64 +18,23 @@ GENERO_CHOICES = (
     ('o', 'Outros')
 )
 
-class CadastroForm(UserCreationForm):
 
-    username = forms.CharField(
-        max_length=100,
-        required=True,
-        widget=forms.TextInput(
-            attrs={"name":"nome",
-                "placeholder": "Nome",
-                "class": "form-control",
-                "id": 'username',
-            }
-        ),
-    )
-    telefone = forms.CharField(
-        label="Número Telefone",
-        widget=forms.TextInput(
-            attrs={"name":"telefone",
-                "placeholder": "Número telefone",
-                "id": "id_telefone",
-                "class": "form-control",
-            }
-        ),
-    )
-    genero = forms.ChoiceField(choices=GENERO_CHOICES)
-    email = forms.EmailField(
-        required=True,
-        widget=forms.TextInput(
-            attrs={"name":"Email",
-                "placeholder": "Email",
-                "class": "form-control",
-            }
-        ),
-    )
-    password1 = forms.CharField(
-        max_length=50,
-        required=True,
-        widget=forms.PasswordInput(
-            attrs={"name":"senha",
-                "placeholder": "Senha",
-                "class": "form-control",
-                "data-toggle": "password",
-                "id": "password",
-            }
-        ),
-    )
-    password2 = forms.CharField(
-        max_length=50,
-        required=True,
-        widget=forms.PasswordInput(
-            attrs={"name":"senha",
-                "placeholder": "Confirme Senha",
-                "class": "form-control",
-                "data-toggle": "password",
-                "id": "password",
-            }
-        ),
-    )
+class UsuarioForm(forms.Form):
+    nome = forms.CharField(label= 'Nome', max_length=100, min_length=3, required=True)
+    sobrenome = forms.CharField(label='Sobrenome' , max_length=100, min_length=3, required=True)
+    email = forms.EmailField(label='Email', required=True, max_length=150)
+    genero = forms.ChoiceField(label='Gênero' , choices=GENERO_CHOICES)
+    telefone = forms.CharField(label='Número de telefone', required=True, max_length=13, min_length=11)
+    password = forms.CharField(label='Senha', widget= forms.PasswordInput(), required=True, min_length=8)
+    password1 = forms.CharField(label='Confirmação de senha', widget= forms.PasswordInput(), required=True, min_length=8)
 
+    def save(self):
+        data = self.cleaned_data
+        comparando_senhas(data['password'], data['password1'])
+        user = Usuario(username=data['nome'], email=data['email'], telefone=data['telefone'], 
+                            genero=data['genero'], password=data['password'])
+        user.save()
+   
     def desativar(request, id):
         usuario = get_object_or_404(Usuario, id=id)
         usuario.ativo = False
@@ -81,19 +45,3 @@ class CadastroForm(UserCreationForm):
         usuario.ativo = True
         usuario.save()
 
-
-
-class UserForm(forms.ModelForm):
-    password = forms.CharField(label='Senha', widget=forms.TextInput(attrs={'type': 'password'}))
-
-    class Meta:
-        model = User
-        fields = ['first_name', 'username', 'email', 'password']
-
-
-
-
-class UserForm(ModelForm):
-    class Meta:
-        model = Cliente
-        fields = "__all__"
