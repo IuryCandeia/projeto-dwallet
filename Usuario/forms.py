@@ -25,8 +25,10 @@ class UsuarioForm(forms.Form):
     email = forms.EmailField(label='Email', required=True, max_length=150)
     genero = forms.ChoiceField(label='Gênero' , choices=GENERO_CHOICES)
     telefone = forms.CharField(label='Número de telefone', required=True, max_length=13, min_length=11)
-    password = forms.CharField(label='Senha', widget= forms.PasswordInput(), required=True, min_length=8)
-    password1 = forms.CharField(label='Confirmação de senha', widget= forms.PasswordInput(), required=True, min_length=8)
+    password = forms.CharField(label='Senha', widget= forms.PasswordInput(
+        attrs={'placeholder': 'Senha', 'class': 'form-control'}), required=True, min_length=8)
+    password1 = forms.CharField(label='Confirmação de senha', widget= forms.PasswordInput(
+        attrs={'placeholder': 'Confirmar Senha', 'class': 'form-control'}), required=True, min_length=8)
 
     def save(self):
         data = self.cleaned_data
