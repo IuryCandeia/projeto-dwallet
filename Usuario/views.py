@@ -23,6 +23,6 @@ def user_form(request):
     if request.method == "POST":
         if form.is_valid():
             form.save()
-            print('ok')
+            print('formulário salvo')
     return render(request, "user_form.html", context)
 
