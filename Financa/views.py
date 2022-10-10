@@ -8,4 +8,8 @@ def inicio(request):
 def add_financa(request):
     context ={}
     context['form']= FinancaForm()
+    form = FinancaForm(request.POST or None)
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
     return render(request, "financa.html", context)
