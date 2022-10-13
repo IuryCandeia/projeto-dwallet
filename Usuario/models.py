@@ -24,7 +24,7 @@ class Base(models.Model):
 
 """Modelo de Usúario"""
 class Usuario(User, Base):
-    User.username = models.CharField('Nome', max_length=100, unique=True, default='')
+    User.username = models.CharField('Nome', max_length=100, default='')
     User.email = models.EmailField("Email", default='eu@eu.com')
     genero = models.CharField("Sexo", max_length=100,choices=GENERO_CHOICES)
     telefone = models.CharField("Telefone", max_length=21, default='', blank=True, null=True)

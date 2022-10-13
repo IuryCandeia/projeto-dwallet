@@ -1,6 +1,7 @@
 import email
 from enum import Flag
 from unicodedata import name
+from attr import fields
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -20,11 +21,15 @@ GENERO_CHOICES = (
 
 
 class UsuarioForm(forms.Form):
-    nome = forms.CharField(label= 'Nome', max_length=100, min_length=3, required=True)
-    sobrenome = forms.CharField(label='Sobrenome' , max_length=100, min_length=3, required=True)
-    email = forms.EmailField(label='Email', required=True, max_length=150)
+    username = forms.CharField(label= 'Nome', required=True ,widget= forms.TextInput(
+        attrs={'placeholder': 'Nome', 'class': 'form-control'}))
+    sobrenome = forms.CharField(label='Sobrenome' , max_length=100, required=False, widget= forms.TextInput(
+        attrs={'placeholder': 'Nome', 'class': 'form-control'}))
+    email = forms.EmailField(label='Email', required=True, max_length=150, widget= forms.TextInput(
+        attrs={'placeholder': 'Email', 'class': 'form-control'}))
     genero = forms.ChoiceField(label='Gênero' , choices=GENERO_CHOICES)
-    telefone = forms.CharField(label='Número de telefone', required=True, max_length=13, min_length=11)
+    telefone = forms.CharField(label='Número de telefone', required=True, max_length=13, widget= forms.NumberInput(
+        attrs={'placeholder': 'Telefone', 'class': 'form-control'}))
     password = forms.CharField(label='Senha', widget= forms.PasswordInput(
         attrs={'placeholder': 'Senha', 'class': 'form-control'}), required=True, min_length=8)
     password1 = forms.CharField(label='Confirmação de senha', widget= forms.PasswordInput(
@@ -33,7 +38,7 @@ class UsuarioForm(forms.Form):
     def save(self):
         data = self.cleaned_data
         comparando_senhas(data['password'], data['password1'])
-        user = Usuario(username=data['nome'], email=data['email'], telefone=data['telefone'], 
+        user = Usuario(username=data['username'], email=data['email'], telefone=data['telefone'], 
                             genero=data['genero'], password=data['password'])
         user.save()
    
@@ -47,3 +52,4 @@ class UsuarioForm(forms.Form):
         usuario.ativo = True
         usuario.save()
 
+   

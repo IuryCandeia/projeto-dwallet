@@ -8,9 +8,12 @@
             <form action="{% url 'login' %}" method="POST" autocomplete="off">
                 {% csrf_token %}
                 <div class="form-row" >
+                    {% if error %}
+                    <p style="color: red">{{ error }}</p>
+                    {% endif %}
                     <div class="col-md-10 offset-md-1">
                         <div class="form-group">
-                            <label class="small mb-1">Email</label>
+                            <label class="mb-1">Email:</label>
                             <input type="email" class="form-control" id="id-email-login" name="email" required
                                     placeholder="Email">
                         </div>
@@ -19,25 +22,23 @@
                 <div class="form-row">
                     <div class="col-md-10 offset-md-1">
                         <div class="form-group">
-                            <label class="small mb-1">Senha</label>
+                            <label class="mb-1">Senha:</label>
                             <input type="password" class="form-control" name="senha" id="id-senha-login" required
                                     placeholder="Senha">
                         </div>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="col-md-10 offset-md-1">
-                        <div class="form-group mt-0 mb-1">
-                          <button name="login" class="col-md-12 btn btn-dark" id="login">Entrar</button>
-                        </div>
+                <div class="text-center">
+                    <input type="submit" class="col-md-4 btn btn-dark" value="Entrar">
+                </div>
                         <div id="bt-esq-senha" class="text-center">
-                            <a href="" id="bt-esqueci-senha">Ainda não tem cadastro? Clique aqui</a>
+                            <a href="{% url 'cadastro_form' %}" id="bt-esqueci-senha">Não tem cadastro? Clique aqui</a>
                         </div>
                     </div>
-                </div>
             </form>
         </div>
     </div>
+    
 
 
 {% endblock %}

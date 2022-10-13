@@ -3,7 +3,7 @@
 {%load static %}
 
 {% block content %}
-    <form class="form-group" action="{% url 'user_form' %}" method="post">
+    <form class="form-group" action="{% url 'cadastro_form' %}" method="post">
         
             {% csrf_token %}
             {{ form.as_p }}

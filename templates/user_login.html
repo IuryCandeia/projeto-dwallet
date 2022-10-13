@@ -8,6 +8,44 @@
     <input type="password" name="password" placeholder="Senha">
     <button type="submit">Entrar</button>
 </form>
+<form method="post">
+  {% csrf_token %}
+    <!-- Email input -->
+    <div class="form-outline mb-4">
+      <input type="email" id="form2Example1" class="form-control" name="email"/>
+      <label class="form-label" for="form2Example1" >{{ form.email }}</label>
+    </div>
+  
+    <!-- Password input -->
+    <div class="form-outline mb-4">
+      <input type="password" id="form2Example2" class="form-control" name="senha"/>
+      <label class="form-label" for="form2Example2" >{{ form.password }}</label>
+    </div>
+  
+    <!-- 2 column grid layout for inline styling -->
+    <div class="row mb-4">
+      <div class="col d-flex justify-content-center">
+        <!-- Checkbox -->
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="form2Example34" checked />
+          <label class="form-check-label" for="form2Example34"> Remember me </label>
+        </div>
+      </div>
+  
+      <div class="col">
+        <!-- Simple link -->
+        <a href="#!">Esqueceu a senha? Clique aqui</a>
+      </div>
+    </div>
+  
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary btn-block mb-4">Entrar</button>
+  
+    <!-- Register buttons -->
+    <div class="text-center">
+      <p>Não tem cadastro? <a href="#!">Registre-se aqui</a></p>
+    </div>
+  </form>
 
 
     
