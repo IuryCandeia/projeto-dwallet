@@ -1,3 +1,4 @@
+import email
 from email.policy import default
 from statistics import mode
 from django.contrib.auth.models import User
@@ -29,6 +30,7 @@ class Usuario(User, Base):
     genero = models.CharField("Sexo", max_length=100,choices=GENERO_CHOICES)
     telefone = models.CharField("Telefone", max_length=21, default='', blank=True, null=True)
     
+    USERNAME_FIELD = 'email'
     
     def statusAtivo(self):
         if self.ativo == True:

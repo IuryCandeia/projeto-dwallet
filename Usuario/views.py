@@ -1,9 +1,10 @@
+from audioop import reverse
 import email
 from multiprocessing import context
 from random import random
+from django import forms
 from django.contrib import messages
 from xml.dom.minidom import CharacterData
-from django.views.generic import TemplateView
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.models import User
 from django.http import HttpResponse
@@ -11,20 +12,27 @@ from django.contrib.auth import authenticate, login
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.views import View
-from Usuario.forms import UsuarioForm
+from Usuario.forms import LoginForm, UsuarioForm
 from Usuario.models import Usuario
 
-class LoginView(TemplateView):
-    template_name = 'login.html'
+def test(request):
+    return render(request, 'usuario/test.html')
 
+# def login_views(request):
+#     if request.method == 'POST':
+
+
+#     else:
+#         form = AuthenticationForm()
+    # return render(request)
 def login_view(request):
     
     if request.method == "POST":
-        username = request.POST.get("email")
-        password = request.POST.get("senha")
+        username = request.POST['email']
+        password = request.POST['senha']
         print(username, password)
 
-        user = authenticate(request, username="email", password="password")
+        user = authenticate(request, username="email", password="senha")
         print(user)
         if user is None:
             print("user none")
@@ -39,18 +47,10 @@ def cadastro_form(request):
     context ={}
     context['form']= UsuarioForm()
     form = UsuarioForm(request.POST or None)
-    print('ok')
 
-    if Usuario.objects.filter(email='email').exists():
-            messages.error(request, 'Usuário já cadastrado ')
-            return redirect("login")
-    if Usuario.objects.filter(username = 'username').exists():
-        messages.error(request, "This username is already taken")
-        return redirect('login')
     if request.method == "POST":
         if form.is_valid():
             form.save()
-            print('ok')
             messages.success(request, 'Colaborador cadastrado com sucesso')
             return redirect('login')
     return render(request, "usuario/cadastro_form.html", context)
@@ -62,7 +62,7 @@ def index(request):
         else:
             return redirect('login')
     except:
-        messages.error(request, 'Ops, Tivemos um pequeno problema inesperado.Recarregue a página e logue novamente')
+        messages.error(request, 'Ops, Tivemos um pequeno problema inesperado. Recarregue a página e logue novamente')
         return redirect('login')
 
     
@@ -75,3 +75,61 @@ def deletarUsuario(request, id):
         form = Usuario.objects.get(id=id)
         form.delete()
         return redirect(request, login)
+
+def login_page(request):
+    form = LoginForm()
+    message = ''
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = authenticate(
+                username = form.cleaned_data['email'],
+                password = form.cleaned_data['senha'],
+            )
+               
+            print(user)
+            if user is not None:
+                login(request, user)
+                message = f'Hello {user.username}! You have been logged in'
+            else:
+                message = 'Login failed!'
+    return render(
+        request, 'usuario/login.html', context={'form': form, 'message': message})
+
+
+def Register(request):
+    form = UsuarioForm()
+
+    if request.method == "POST":
+        context = {'has_error': False}
+        username = request.POST.get('nome')
+        sobrenome = request.POST.get('last_name')
+        email = request.POST.get('email')
+        password = request.POST.get('senha')
+        password1 = request.POST.get('conf_senha')
+
+
+        if password != password1:
+            messages.error(request, '⚠️ Password Mismatch! Your Passwords Do Not Match')
+            return redirect('cadastro_form')
+
+        if not username:
+            messages.error(request, '⚠️ Username is required!')
+            return redirect('cadastro_form')
+
+        if User.objects.filter(username=username).exists():
+            messages.error(request, '⚠️ Username is taken! Choose another one')
+
+            return render(request, "usuario/cadastro_form.html")
+
+        if User.objects.filter(email=email).exists():
+            messages.error(request, '⚠️ Email is taken! Choose another one')
+
+            return render(request, 'cadastro_form')
+
+        user = User.objects.create_user(username=username, sobrenome=sobrenome, email=email)
+        user.set_password(password)
+        user.save()
+        print('ok')
+    print('out')
+    return render(request,  "usuario/cadastro_form.html", {'form':form})

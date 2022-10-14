@@ -22,18 +22,18 @@ GENERO_CHOICES = (
 
 class UsuarioForm(forms.Form):
     username = forms.CharField(label= 'Nome', required=True ,widget= forms.TextInput(
-        attrs={'placeholder': 'Nome', 'class': 'form-control'}))
+        attrs={'name': 'nome','placeholder': 'Nome', 'class': 'form-control'}))
     sobrenome = forms.CharField(label='Sobrenome' , max_length=100, required=False, widget= forms.TextInput(
         attrs={'placeholder': 'Nome', 'class': 'form-control'}))
     email = forms.EmailField(label='Email', required=True, max_length=150, widget= forms.TextInput(
-        attrs={'placeholder': 'Email', 'class': 'form-control'}))
+        attrs={'name': 'email','placeholder': 'Email', 'class': 'form-control'}))
     genero = forms.ChoiceField(label='Gênero' , choices=GENERO_CHOICES)
     telefone = forms.CharField(label='Número de telefone', required=True, max_length=13, widget= forms.NumberInput(
         attrs={'placeholder': 'Telefone', 'class': 'form-control'}))
     password = forms.CharField(label='Senha', widget= forms.PasswordInput(
-        attrs={'placeholder': 'Senha', 'class': 'form-control'}), required=True, min_length=8)
+        attrs={'name': 'senha','placeholder': 'Senha', 'class': 'form-control'}), required=True, min_length=8)
     password1 = forms.CharField(label='Confirmação de senha', widget= forms.PasswordInput(
-        attrs={'placeholder': 'Confirmar Senha', 'class': 'form-control'}), required=True, min_length=8)
+        attrs={'name': 'conf_senha', 'placeholder': 'Confirmar Senha', 'class': 'form-control'}), required=True, min_length=8)
 
     def save(self):
         data = self.cleaned_data
@@ -52,4 +52,24 @@ class UsuarioForm(forms.Form):
         usuario.ativo = True
         usuario.save()
 
-   
+    class Meta:
+        model = User
+        fields = ('username', 'sobrenome', 'email', 'genero', 'telefone', 'password1', 'password2')
+
+class LoginForm(forms.Form):
+    email = forms.CharField(
+        widget=forms.TextInput(
+            attrs={"name": "email",
+                "placeholder" : "Digite seu Email",
+                "class": "form-control",
+            }
+        ))
+    senha = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={"name": "senha",
+                "placeholder" : "Digite sua Senha",
+                "class": "form-control",
+            }
+        ))
+
+

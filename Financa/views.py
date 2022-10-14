@@ -12,4 +12,4 @@ def add_financa(request):
     if request.method == "POST":
         if form.is_valid():
             form.save()
-    return render(request, "financa.html", context)
+    return render(request, "financa/financa.html", context)
