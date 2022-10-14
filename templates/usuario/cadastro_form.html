@@ -1,0 +1,72 @@
+{% extends 'main.html' %}
+{%load static %}
+{% block content %}
+
+<div class="container">
+    <div class=" card-body">
+        <h3>Cadastro</h3>
+        <p class="lead">
+            Preencha todos os campos (*).
+        </p>
+        <hr>
+        <form action="{% url 'cadastro_form'%}" method="POST">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="mb-1">{{ form.username.label_tag }}* </label>
+                        {{ form.username }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="mb-1">{{ form.sobrenome.label_tag }} </label>
+                        {{ form.sobrenome }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="mb-1">{{ form.telefone.label_tag }}* </label>
+                        {{ form.telefone }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="mb-1">{{ form.email.label_tag }}* </label>
+                        {{ form.email }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="mb-1">Gênero:* </label>
+                        <div class='form-control select2-selection__choice'>
+                        {{ form.genero }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="mb-1">{{ form.password.label_tag }}* </label>
+                        {{ form.password }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="mb-1">{{ form.password1.label_tag }}* </label>
+                        {{ form.password1 }}
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="text-center">
+                <input type="submit" class="col-md-4 btn btn-dark" value="Cadastrar">
+            </div>
+            <div id="bt-esq-senha" class="text-center">
+                <a href="{% url 'login' %}" id="bt-esqueci-senha">Já possui conta? Clique aqui para fazer login</a>
+            </div>
+    </div>
+    </form>
+</div>
+{% endblock %}

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Usuario',
     'user',
+    'Financa',
 ]
 
 MIDDLEWARE = [
@@ -133,7 +134,7 @@ STATICFILES_DIR = (os.path.join(BASE_DIR, '/static/'))
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# LOGIN_REDIRECT_URL = 'homepage'
+# LOGIN_REDIRECT_URL = '/financa/'
 # LOGOUT_REDIRECT_URL = 'login'
 
 # Configurações de autenticação

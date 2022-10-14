@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Este é um título</h1>
+<p>
+  Este é um texto
+</p>
+<p>
+  Este é outro texto
+</p>
+
+<a href="#" onclick="diminuir()">Diminuir</a> |
+<a href="#" onclick="aumentar()">Aumentar</a>
+
+<script>
+    tamanho = 16;
+function diminuir() {
+  tamanho--;
+  document.body.style.fontSize = tamanho + "px";
+}
+function aumentar() {
+  tamanho++;
+  document.body.style.fontSize = tamanho + "px";
+}
+</script>
+
+<style>
+    body{
+  font-size:16px;
+}
+h1{
+  font-size:2em;
+}
+p{
+  font-size:1em;
+}
+</style>
+</body>
+</html>
