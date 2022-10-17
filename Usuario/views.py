@@ -7,14 +7,15 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
+from Usuario.forms import UsuarioForm
+from .models import Usuario
+from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.views import View
 from Usuario.forms import LoginForm, UsuarioForm
 from Usuario.models import Usuario
 
-def test(request):
-    return render(request, 'usuario/test.html')
 
 def login_view(request):
     form = LoginForm(request.POST or None)

@@ -1,5 +1,3 @@
-import email
-from enum import Flag
 from unicodedata import name
 from attr import fields
 from django import forms
@@ -8,7 +6,6 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import ModelForm
 from django.shortcuts import get_object_or_404
 from requests import post
-from sqlalchemy import null
 
 from Usuario.models import Usuario
 from Usuario.validacao import comparando_senhas, duplicidade_email,  duplicidade_id
@@ -18,6 +15,56 @@ GENERO_CHOICES = (
     ('f', 'Feminino'),
     ('o', 'Outros')
 )
+
+
+class UsuarioForm(UserCreationForm):
+    username = forms.CharField(
+        max_length=100,
+        required=True,
+        widget=forms.TextInput(
+            attrs={"name":"nome",
+                "placeholder": "Nome",
+                "class": "form-control",
+                "id": 'username',
+            }
+        ),
+    )
+    telefone = forms.CharField(
+        label="Número Telefone",
+        widget=forms.TextInput(
+            attrs={"name":"telefone",
+                "placeholder": "Número telefone",
+                "id": "id_telefone",
+                "class": "form-control",
+            }
+        ),
+    )
+    genero = forms.ChoiceField(choices=GENERO_CHOICES)
+    email = forms.EmailField(
+        required=True,
+        widget=forms.TextInput(
+            attrs={"name":"Email",
+                "placeholder": "Email",
+                "class": "form-control",
+            }
+        ),
+    )
+
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+
+    def desativar(request, id):
+        usuario = get_object_or_404(Usuario, id=id)
+        usuario.ativo = False
+        usuario.save()
+        
+    def ativar(request, id):
+        usuario = get_object_or_404(Usuario, id=id)
+        usuario.ativo = True
+        usuario.save()
+
 
 
 class UsuarioForm(forms.Form):
