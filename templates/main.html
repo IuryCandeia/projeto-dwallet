@@ -22,7 +22,7 @@
             {% if user.is_authenticated %}
             
             <li class="nav-item">
-              <a class="nav-link" href="/logout">Sair</a>
+              <a class="nav-link" href="users/logout">Sair</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Bem-vindo, {{user.username}}</a>
@@ -31,7 +31,7 @@
             {% else %}
       
             <li class="nav-item">
-              <a class="nav-link" href="/login">Login</a>
+              <a class="nav-link" href="users/login">Login</a>
             </li>
       
             {% endif %}
@@ -39,8 +39,6 @@
         </div>
       </nav>
     
-<<<<<<< HEAD
-=======
     <div class="navbar-nav">
         <header class="d-flex justify-content-center ">
             <h2 class="text-xxl-center text-white ">Dwallet</h2>
@@ -50,7 +48,6 @@
         </header>
     </div>
     
->>>>>>> 4e710f214a8a8170dddd43f53b3345cf82f6a158
     {% block content %}
     
     {% endblock %}

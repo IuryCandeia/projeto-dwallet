@@ -38,9 +38,9 @@ def login_request(request):
 		else:
 			messages.error(request,"Invalid username or password.")
 	form = AuthenticationForm()
-	return render(request=request, template_name="usuario/login.html", context={"form":form})
+	return render(request=request, template_name="users/login_page.html", context={"form":form})
 
 def logout_request(request):
 	logout(request)
 	messages.info(request, "Logout efetuado com sucesso.") 
-	return redirect("home")
+	return redirect('login_page')

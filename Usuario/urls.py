@@ -8,7 +8,7 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path('', login_view, name="login"),
+    path('', login_view, name="logins"),
     path('cadastro/', cadastro_form, name="cadastro_form"),
     path('deletar/<id>', deletarUsuario, name='deletar_usuario'),
 
