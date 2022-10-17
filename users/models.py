@@ -1,17 +1,8 @@
-import email
 from email.policy import default
-from statistics import mode
-from django.contrib.auth.models import User
+from django import forms
 from django.db import models
-from django.forms import CharField
-from pkg_resources import require
-from sqlalchemy import false
-
-GENERO_CHOICES = (
-    ('m', 'Masculino'),
-    ('f', 'Feminino'),
-    ('o', 'Outros')
-)
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm  
 
 class Base(models.Model):
     criado = models.DateTimeField(
@@ -23,11 +14,9 @@ class Base(models.Model):
     class Meta:
         abstract = True
 
-"""Modelo de Usúario"""
-class Usuario(User, Base):
+class Users(User, Base):
     User.username = models.CharField('Nome', max_length=100, default='')
     User.email = models.EmailField("Email", default='eu@eu.com')
-    telefone = models.CharField("Telefone", max_length=21, default='', blank=True, null=True)
     
     USERNAME_FIELD = 'email'
     
@@ -36,9 +25,3 @@ class Usuario(User, Base):
             return "Ativo"
         else:
             return "Inativo"
-
-
-
-
-
-

@@ -11,7 +11,7 @@ from requests import post
 from sqlalchemy import null
 
 from Usuario.models import Usuario
-from Usuario.validacao import comparando_senhas,  duplicidade_id
+from Usuario.validacao import comparando_senhas, duplicidade_email,  duplicidade_id
 
 GENERO_CHOICES = (
     ('m', 'Masculino'),
@@ -27,7 +27,6 @@ class UsuarioForm(forms.Form):
         attrs={'placeholder': 'Nome', 'class': 'form-control'}))
     email = forms.EmailField(label='Email', required=True, max_length=150, widget= forms.TextInput(
         attrs={'name': 'email','placeholder': 'Email', 'class': 'form-control'}))
-    genero = forms.ChoiceField(label='Gênero' , choices=GENERO_CHOICES)
     telefone = forms.CharField(label='Número de telefone', required=True, max_length=13, widget= forms.NumberInput(
         attrs={'placeholder': 'Telefone', 'class': 'form-control'}))
     password = forms.CharField(label='Senha', widget= forms.PasswordInput(
@@ -35,12 +34,21 @@ class UsuarioForm(forms.Form):
     password1 = forms.CharField(label='Confirmação de senha', widget= forms.PasswordInput(
         attrs={'name': 'conf_senha', 'placeholder': 'Confirmar Senha', 'class': 'form-control'}), required=True, min_length=8)
 
+
     def save(self):
         data = self.cleaned_data
         comparando_senhas(data['password'], data['password1'])
-        user = Usuario(username=data['username'], email=data['email'], telefone=data['telefone'], 
-                            genero=data['genero'], password=data['password'])
-        user.save()
+        duplicacao_email = duplicidade_email(data['email'])
+        id_duplicado = duplicidade_id(data['username'])
+
+        if duplicacao_email == False and id_duplicado == False:
+            user = Usuario(username=data['username'], email=data['email'], telefone=data['telefone'], 
+                            password=data['password'])
+            user.save()
+            return [duplicacao_email, id_duplicado, user.id]
+        else:
+            return [duplicacao_email, id_duplicado]
+    
    
     def desativar(request, id):
         usuario = get_object_or_404(Usuario, id=id)

@@ -8,20 +8,18 @@ def comparando_senhas(s1, s2):
     return False
 
 
-# def duplicidade_email(email):
-#     usuario = Usuario.objects.all()
-
-#     for user in Usuario:
-#         if user.email == email:
-#             return True
-
-#     return False
+def duplicidade_email(email):
+    usuario = Usuario.objects.all()
+    for user in usuario:
+        if user.email == email:
+            return True
+    return False
 
 
 def duplicidade_id(id):
     usuario = Usuario.objects.all()
 
-    for user in Usuario:
+    for user in usuario:
         if user.username == id:
             return True
 

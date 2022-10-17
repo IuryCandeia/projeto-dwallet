@@ -1,10 +1,8 @@
 from audioop import reverse
-import email
 from multiprocessing import context
 from random import random
 from django import forms
 from django.contrib import messages
-from xml.dom.minidom import CharacterData
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.models import User
 from django.http import HttpResponse
@@ -18,21 +16,14 @@ from Usuario.models import Usuario
 def test(request):
     return render(request, 'usuario/test.html')
 
-# def login_views(request):
-#     if request.method == 'POST':
-
-
-#     else:
-#         form = AuthenticationForm()
-    # return render(request)
 def login_view(request):
-    
+    form = LoginForm(request.POST or None)
     if request.method == "POST":
         username = request.POST['email']
         password = request.POST['senha']
         print(username, password)
 
-        user = authenticate(request, username="email", password="senha")
+        user = authenticate(request, username=username, password=password)
         print(user)
         if user is None:
             print("user none")
@@ -41,7 +32,7 @@ def login_view(request):
         login(request, user)
         print(user)
         return redirect('/financa')
-    return render(request, "usuario/login.html", {})
+    return render(request, "usuario/login.html", context={'form': form})
 
 def cadastro_form(request):
     context ={}
@@ -77,59 +68,21 @@ def deletarUsuario(request, id):
         return redirect(request, login)
 
 def login_page(request):
-    form = LoginForm()
-    message = ''
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
+    if request.method == "POST":
+        form = LoginForm()
         if form.is_valid():
-            user = authenticate(
-                username = form.cleaned_data['email'],
-                password = form.cleaned_data['senha'],
-            )
-               
+            username = form.cleaned_data['email'],
+            password = form.cleaned_data['senha'],
+            user = authenticate(username=username, password=password)                
             print(user)
             if user is not None:
                 login(request, user)
-                message = f'Hello {user.username}! You have been logged in'
+                messages.info(request, f"O {username} está logado.")
+                return redirect("test")
             else:
-                message = 'Login failed!'
-    return render(
-        request, 'usuario/login.html', context={'form': form, 'message': message})
+                messages.error(request, "Email ou senha inválidos.")
+        else:
+            messages.error(request, "Email ou senha inválidos.")
+    form = LoginForm()
+    return render(request=request, template_name="usuario/login.html", context={'form':form})
 
-
-def Register(request):
-    form = UsuarioForm()
-
-    if request.method == "POST":
-        context = {'has_error': False}
-        username = request.POST.get('nome')
-        sobrenome = request.POST.get('last_name')
-        email = request.POST.get('email')
-        password = request.POST.get('senha')
-        password1 = request.POST.get('conf_senha')
-
-
-        if password != password1:
-            messages.error(request, '⚠️ Password Mismatch! Your Passwords Do Not Match')
-            return redirect('cadastro_form')
-
-        if not username:
-            messages.error(request, '⚠️ Username is required!')
-            return redirect('cadastro_form')
-
-        if User.objects.filter(username=username).exists():
-            messages.error(request, '⚠️ Username is taken! Choose another one')
-
-            return render(request, "usuario/cadastro_form.html")
-
-        if User.objects.filter(email=email).exists():
-            messages.error(request, '⚠️ Email is taken! Choose another one')
-
-            return render(request, 'cadastro_form')
-
-        user = User.objects.create_user(username=username, sobrenome=sobrenome, email=email)
-        user.set_password(password)
-        user.save()
-        print('ok')
-    print('out')
-    return render(request,  "usuario/cadastro_form.html", {'form':form})

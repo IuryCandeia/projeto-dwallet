@@ -15,8 +15,6 @@ class EmailOrUsernameBackend(BaseBackend):
 
         except User.DoesNotExist:
             return None
-
-
     def get_user(self, user_id):
         try:
             return get_user_model().objects.get(pk=user_id)

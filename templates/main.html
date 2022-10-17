@@ -12,12 +12,33 @@
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="False" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="navbar-nav mr-auto">
+            {% if user.is_authenticated %}
+            
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Sair</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Bem-vindo, {{user.username}}</a>
+            </li>
+      
+            {% else %}
+      
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+      
+            {% endif %}
+          </ul>
+        </div>
+      </nav>
     
-    <div class="navbar-nav">
-        <header class="d-flex justify-content-center ">
-            <h2 class="text-xxl-center text-white ">Dwallet</h2>
-        </header>
-    </div>
     {% block content %}
     
     {% endblock %}
