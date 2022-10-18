@@ -1,1 +1,11 @@
-<h1>Oi</h1>
+{% extends 'main.html' %}
+{%load static %}
+{% block content %}
+<div class='container justify-content-center'>
+    <h2>
+        Bem vindo a sua carteira pessoal.
+    </h2>
+        <a href='{% url "add_financa" %}'>Add finança</a>
+</div>
+
+{% endblock %}

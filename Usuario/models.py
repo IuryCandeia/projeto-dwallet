@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.forms import CharField
 from pkg_resources import require
-from sqlalchemy import false
 
 GENERO_CHOICES = (
     ('m', 'Masculino'),
@@ -27,7 +26,6 @@ class Base(models.Model):
 class Usuario(User, Base):
     User.username = models.CharField('Nome', max_length=100, default='')
     User.email = models.EmailField("Email", default='eu@eu.com')
-    telefone = models.CharField("Telefone", max_length=21, default='', blank=True, null=True)
     
     USERNAME_FIELD = 'email'
     
