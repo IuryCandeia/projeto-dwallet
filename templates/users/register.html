@@ -4,14 +4,17 @@
 
 
 <!--Register--> 
-<div class="container py-5">
-	<h1>Register</h1>
-	<form method="POST">
-		{% csrf_token %}
-		{{ form.as_p}}                    
-		<input class="btn btn-primary" type="submit">
-    </form>
-	<p class="text-center">If you already have an account, <a href="/login">login</a> instead.</p>
+<div class="row g-3">
+	<div class="col">
+		<h1>Register</h1>
+		<form method="POST" class="form-control">
+			{% csrf_token %}
+			{{ form.as_p}}                    
+			<input class="btn btn-primary" type="submit">
+			<p class="text-center">Já possui conta? Faça <a href="{% url 'login_page'%}">login aqui</a>.</p>
+		</form>
+		
+	</div>	
 </div>
 
 {% endblock %}
