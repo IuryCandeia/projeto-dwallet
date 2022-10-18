@@ -5,8 +5,6 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 
 def register_request(request):
-	title_error = None
-	text_error = None
 	if request.method == "POST":
 		form = NewUserForm(request.POST)
 		if form.is_valid():
@@ -14,17 +12,7 @@ def register_request(request):
 			login(request, user)
 			messages.success(request, "Registration successful." )
 			return redirect("login")
-		else:
-			title_error = 'EMAIL OU SENHA INCORRETO'
-			text_error = 'EMAIL OU SENHA INCORRETO'
-			dados = {
-				'title_error': title_error,
-				'text_error': text_error,
-			}
-
-			descricao = f'{title_error} - {text_error}'
-			error_sucess = 'error'
-			return render(request, 'users/register.html', dados)
+		messages.error(request, "Unsuccessful registration. Invalid information.")
 	form = NewUserForm()
 	return render (request=request, template_name="users/register.html", context={"form":form})
 

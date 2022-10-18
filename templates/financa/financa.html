@@ -3,6 +3,8 @@
 
 {% block content %}
 
+{% if user.is_authenticated %}
+
 <div class="container">
     <form class="form-input-group-text" action="" method="post">
         <div class="mb-2 mt-2">
@@ -43,4 +45,5 @@
       </table>
 </div>
 </div>
+{% endif %}
 {% endblock %}
