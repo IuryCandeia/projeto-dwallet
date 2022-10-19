@@ -9,10 +9,9 @@ def register_request(request):
 		form = NewUserForm(request.POST)
 		if form.is_valid():
 			user = form.save()
-			login(request, user)
 			messages.success(request, "Registration successful." )
-			return redirect("login")
-		messages.error(request, "Unsuccessful registration. Invalid information.")
+			return render(request, "users/home_page.html")
+		messages.error(request, "Não foi possível completar o cadastro, informações inválidas.")
 	form = NewUserForm()
 	return render (request=request, template_name="users/register.html", context={"form":form})
 
@@ -23,19 +22,18 @@ def login_request(request):
 	if request.method == "POST":
 		form = AuthenticationForm(request, data=request.POST)
 		print('ghere')
-		print(form)
 		if form.is_valid():
 			username = form.cleaned_data.get('username')
 			password = form.cleaned_data.get('password')
 			user = authenticate(username=username, password=password)
 			if user is not None:
 				login(request, user)
-				messages.info(request, f"You are now logged in as {username}.")
+				messages.info(request, f"Você está logado como {username}.")
 				return redirect("home")
 			else:
-				messages.error(request,"Invalid username or password.")
+				messages.error(request,"Username ou senha inválidos.")
 		else:
-			messages.error(request,"Invalid username or password.")
+			messages.error(request,"Username ou senha inválidos.")
 	form = AuthenticationForm()
 	return render(request=request, template_name="users/login_page.html", context={"form":form})
 

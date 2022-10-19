@@ -1,13 +1,19 @@
 {% extends 'main.html' %}
 {%load static %}
 {% block content %}
+    {% if messages.error %}
+    {{ error }}
+    {% endif %}
     <div class="col-md-5 container align-content-center">
         <h2 class="text-lg-center">Login</h2>
         <hr>
         <div class="card-body">
             <form action="{% url 'login' %}" method="POST" autocomplete="off">
                 {% csrf_token %}
-                {{ form.as_p }}
+                {{ form.email.label_tag }}
+                {{ form.email }}
+                {{ form.password.label_tag }}
+                {{ form.password }}
                 <div class="text-center">
                     <input type="submit" class="col-md-4 btn btn-dark" value="Entrar">
                 </div>

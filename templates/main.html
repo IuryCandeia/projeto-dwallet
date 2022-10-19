@@ -32,7 +32,7 @@
             {% else %}
       
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'login' %}">Login</a>
+              <a class="nav-link" href="{% url 'login_page' %}">Login</a>
             </li>
       
             {% endif %}
@@ -42,7 +42,6 @@
     
     <div class="navbar-nav">
         <header class="d-flex justify-content-center ">
-            <h2 class="text-xxl-center text-white ">Dwallet</h2>
             {% if request.user.is_autheticated %}
                 <h2>Estou autenticado</h2>
             {% endif %}

@@ -9,5 +9,15 @@
         <a href='{% url "add_financa" %}'>Add finança</a>
 </div>
 {% endif %}
+{% if user.is_not_authenticated %}
+    <div class='container justify-content-center'>
+        <h2>
+            Bem vindo a sua carteira pessoal.
+        </h2>
+        <a href="{% url 'login_page' %}">Clique aqui para fazer login.
+        </a>
+    </div>
+{% endif %}    
+    
 
 {% endblock %}
