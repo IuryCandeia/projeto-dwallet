@@ -10,15 +10,18 @@
         <div class="mb-2 mt-2">
     {% csrf_token %}
     {{ form.as_p }}
+    <div class='container'>
+    <a href='{% url 'home' %}'>Voltar</a>
     <input class="btn btn-primary" type="submit" value="Salvar">
-
-    </form>
+    </div>
+  </form>
+    
     <table class="table">
         <thead>
           <tr>
             <th scope="col">*
             </th>
-            <th scope="col">{{ form.title.label_tag }}</th>
+            <th scope="col">{{ form.titulo.label_tag }}</th>
             <th scope="col">{{ form.descricao.label_tag }}</th>
             <th scope="col">{{ form.valor.label_tag }}</th>
           </tr>

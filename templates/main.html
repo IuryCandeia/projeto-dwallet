@@ -12,14 +12,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 </head>
 <body>
+  {% if user.is_authenticated %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{% url 'home' %}">D'Wallet</a>
+        <a class="navbar-brand" href="{% url 'home' %}"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="32" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+          <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
+        </svg></a>
+        
+        <i class="bi bi-house-door-fill"></i>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="False" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav mr-auto">
-            {% if user.is_authenticated %}
+            
             
             
             <li class="nav-item">
@@ -30,10 +35,8 @@
               </li>
       
             {% else %}
-      
-            <li class="nav-item">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
               <a class="nav-link" href="{% url 'login_page' %}">Login</a>
-            </li>
       
             {% endif %}
           </ul>
