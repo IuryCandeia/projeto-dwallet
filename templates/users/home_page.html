@@ -1,13 +1,18 @@
 {% extends 'main.html' %}
-{%load static %}
+{% load static %}
 {% block content %}
 {% if user.is_authenticated %}
-<div class='container justify-content-center'>
-    <h2>
-        Bem vindo a sua carteira pessoal.
-    </h2>
-        <a href='{% url "add_financa" %}'>Add finança</a>
+<link rel="stylesheet" href="{% static 'css/main.css'%}">
+
+<div class="container"></div>
+    <div class='col-md-8'>
+        <h2>
+            Bem vindo a sua carteira pessoal.
+        </h2>
+            <a href='{% url "add_financa" %}'>Add finança</a>
+    </div>
 </div>
+<h2>ola</h2>
 {% endif %}
 {% if user.is_not_authenticated %}
     <div class='container justify-content-center'>

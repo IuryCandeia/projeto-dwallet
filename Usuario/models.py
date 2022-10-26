@@ -25,6 +25,7 @@ class Base(models.Model):
 """Modelo de Usúario"""
 class Usuario(User, Base):
     User.username = models.CharField('Nome', max_length=100, default='')
+    sobrenome = models.CharField("Nome", max_length=150, default='')
     User.email = models.EmailField("Email", default='eu@eu.com')
     
     USERNAME_FIELD = 'email'

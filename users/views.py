@@ -41,3 +41,6 @@ def logout_request(request):
 	logout(request)
 	messages.info(request, "Logout efetuado com sucesso.") 
 	return redirect('login_page')
+
+def test(request):
+	return render(request, 'usuario/test.html')

@@ -2,7 +2,7 @@ from unicodedata import name
 from attr import fields
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import  AuthenticationForm
 from django.forms import ModelForm
 from django.shortcuts import get_object_or_404
 from requests import post
@@ -53,19 +53,19 @@ class UsuarioForm(forms.Form):
         fields = ('username', 'sobrenome', 'email', 'password1', 'password2')
 
 class LoginForm(forms.Form):
-    email = forms.CharField(
+    username = forms.CharField(
         widget=forms.TextInput(
-            attrs={"name": "email",
-                "placeholder" : "Digite seu Email",
+            attrs={"name": "username",
+                "placeholder" : "Digite seu nome de usuário",
                 "class": "form-control",
             }
         ))
     senha = forms.CharField(
         widget=forms.PasswordInput(
-            attrs={"name": "senha",
+            attrs={"name": "password",
                 "placeholder" : "Digite sua Senha",
                 "class": "form-control",
             }
         ))
-
+ 
 

@@ -10,10 +10,10 @@
         <div class="card-body">
             <form action="{% url 'login' %}" method="POST" autocomplete="off">
                 {% csrf_token %}
-                {{ form.email.label_tag }}
-                {{ form.email }}
-                {{ form.password.label_tag }}
-                {{ form.password }}
+                <label for="email">Email:</label>
+                <input type="text" name="email">
+                <label for="email">Senha:</label>
+                <input type="text" name="password">
                 <div class="text-center">
                     <input type="submit" class="col-md-4 btn btn-dark" value="Entrar">
                 </div>

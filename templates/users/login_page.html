@@ -5,18 +5,19 @@
         {% if forms.errors %}
         <p>Email ou senha inválidos!</p>
         {% endif %}
-        <h2 class="text-lg-center">Login</h2>
+        <h2 class="text-lg-center justify-content-center">Login</h2>
         <hr>
-            <div class="container col-auto justify-content-center ">
+            
             <form action="{% url 'login_page' %}" method="POST" autocomplete="off">
+                <div class="col-md-6 container justify-content-center ">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <div class="text-center">
-                    <input type="submit" class="col-md-6 btn btn-dark" value="Entrar">
+                </div>
+                <div class="text-center justify-content-center">
+                    <input type="submit" class="col-md-7 btn btn-dark" value="Entrar">
                 </div>
                         <div id="bt-esq-senha" class="text-center">
                             <a href="{% url 'register' %}" id="bt-esqueci-senha">Não tem cadastro? Clique aqui</a>
-                        </div>
                     </div>
                 </div>
             </form>
