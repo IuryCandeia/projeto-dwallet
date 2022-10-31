@@ -1,4 +1,3 @@
-import email
 from email.policy import default
 from statistics import mode
 from django.contrib.auth.models import User
@@ -28,7 +27,6 @@ class Usuario(User, Base):
     sobrenome = models.CharField("Nome", max_length=150, default='')
     User.email = models.EmailField("Email", default='eu@eu.com')
     
-    USERNAME_FIELD = 'email'
     
     def statusAtivo(self):
         if self.ativo == True:

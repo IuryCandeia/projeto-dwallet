@@ -49,7 +49,7 @@ class UsuarioForm(forms.Form):
         usuario.save()
 
     class Meta:
-        model = User
+        model = Usuario
         fields = ('username', 'sobrenome', 'email', 'password1', 'password2')
 
 class LoginForm(forms.Form):

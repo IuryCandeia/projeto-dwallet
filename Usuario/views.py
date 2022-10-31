@@ -110,7 +110,6 @@ def login_ok(request):
        
         nome = Usuario.objects.filter(email=email).values_list('username', flat=True).get()
         id_usuario = Usuario.objects.filter(email=email).values_list('id', flat=True).get()
-        nome_usuario_authenticated = Usuario.objects.filter(email=email).values_list('nomeUsuario', flat=True).get()
         Usuario = auth.authenticate(request, username=nome, password=senha)
         ativo_inativo = Usuario.objects.filter(email=email).values_list('ativo', flat=True).get()
         if ativo_inativo == True:
